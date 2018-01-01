@@ -7,18 +7,17 @@
  */
 
 namespace App\Http\Controllers;
+
 use Illuminate\Http\Request;
-
 use Qiniu\Auth;
-
 
 class UploadController extends Controller
 {
-    public function uppic(Request $request)
+    public function upPic(Request $request)
     {
-        $accessKey = $request->accessKey;
-        $secretKey = $request->secretKey;
-        $bucket = $request->bucket;
+        $accessKey = $request->input('accessKey');
+        $secretKey = $request->input('secretKey');
+        $bucket = $request->input('bucket');
         $auth = new Auth($accessKey, $secretKey);
         $token = $auth->uploadToken($bucket);
         return response()->json([

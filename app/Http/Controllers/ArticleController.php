@@ -35,7 +35,7 @@ class ArticleController extends Controller
             $article_data = ValidationHelper::getInputData($request, $rule);
             $this->articleService->addArticle($article_data);
             return response()->json([
-                'code' => '1000',
+                'code' => 1000,
                 'message' => '文章添加成功'
             ]);
         }

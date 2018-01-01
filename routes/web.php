@@ -22,4 +22,4 @@ Route::post('/article/update','ArticleController@editArticle');
 Route::get('/article/delete','ArticleController@deleteArticle');
 
 
-Route::post('/upload','UploadController@uppic');
+Route::post('/upload','UploadController@upPic');
