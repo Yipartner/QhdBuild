@@ -61,6 +61,7 @@ class ArticleController extends Controller
         $article_list = $this->articleService->selectArticleList($catalog_id);
         if (isset($article_list[0]))
             return response()->json([
+                'code' => 1000,
                 'list' => $article_list
             ]);
         else
@@ -98,10 +99,19 @@ class ArticleController extends Controller
 
     public function deleteArticle($article_id)
     {
-        $this->articleService->deleteArticle($article_id);
-        return response()->json([
-            'code' =>1000,
-            'message' => '删除成功'
-        ]);
+        $article_data = $this->articleService->selectArticle($article_id);
+        if (isset($article_data->article_id)) {
+            $this->articleService->deleteArticle($article_id);
+            return response()->json([
+                'code' =>1000,
+                'message' => '删除成功'
+            ]);
+        } else
+            return response()->json([
+                'code' => 2002,
+                'message' => '文章不存在'
+            ]);
+
+
     }
 }

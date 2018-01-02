@@ -22,17 +22,19 @@ class CatalogService
             return DB::table('catalogs')->where('catalog_lv', $lv)->get();
         }
     }
-    public function selectCatalogByLastId($lastCatalogId){
-        if ($this->isSetCatalog($lastCatalogId)){
-            return DB::table('catalogs')->where('last_catalog_id',$lastCatalogId)->get();
-        }
-        else{
+
+    public function selectCatalogByLastId($lastCatalogId)
+    {
+        if ($this->isSetCatalog($lastCatalogId)) {
+            return DB::table('catalogs')->where('last_catalog_id', $lastCatalogId)->get();
+        } else {
             return response()->json([
                 'code' => 4002,
                 'message' => '目录不存在'
             ]);
         }
     }
+
     public function deleteCatalog($catalog_id)
     {
         DB::table('catalogs')->where('catalog_id', $catalog_id)->delete();
