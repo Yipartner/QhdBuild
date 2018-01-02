@@ -39,7 +39,11 @@ class ArticleService
 
     public function selectArticleList($catalog_id)
     {
-        $article_list = DB::table('articles')->where('article_catalog', $catalog_id)->get();
+        $article_list = DB::table('articles')->where('article_catalog', $catalog_id)->orderBy('created_at','desc')->paginate(10);
+        foreach ($article_list as $key => $value){
+            unset($value->article_real_content);
+            unset($value->article_rendered_content);
+        }
         return $article_list;
     }
 

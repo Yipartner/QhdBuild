@@ -30,10 +30,11 @@ class PictureController extends Controller
             ]);
         } else {
             $pictureData = ValidationHelper::getInputData($request, $rule);
-            $this->pictureService->addPicture($pictureData);
+            $pictureId=$this->pictureService->addPicture($pictureData);
             return response()->json([
                 'code' => 1000,
-                'message' => '图片添加成功'
+                'message' => '图片添加成功',
+                'picture_id'=> $pictureId
             ]);
         }
     }

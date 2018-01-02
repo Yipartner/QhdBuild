@@ -8,7 +8,7 @@ class  PictureService
 {
     public function addPicture($picture_data)
     {
-        DB::table('pictures')->insert($picture_data);
+        return DB::table('pictures')->insertGetId($picture_data);
     }
 
     public function deletePicture($picture_id)

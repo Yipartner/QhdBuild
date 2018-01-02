@@ -55,24 +55,37 @@ class CatalogController extends Controller
             $this->catalogService->updateCatalog($catalog_data);
             return response()->json([
                 'code' => 1000,
-                'message' => '目录添加成功'
+                'message' => '目录更新成功'
             ]);
         }
     }
     public function showCatalog(){
-        $Lv1catalog=$this->catalogService->selectCatalogByLv(1);
-        $catalogs=[];
-        foreach ($Lv1catalog as $key => $value){
-            $catalogs[$value->catalog_id]=[];
-            $catalogs[$value->catalog_id]['name']=$value->catalog_name;
-            $catalogs[$value->catalog_id]['nextLvCatalog']=[];
-        }
-
+        $catalogsLv2=[];
         $Lv2catalog=$this->catalogService->selectCatalogByLv(2);
         foreach ($Lv2catalog as $key => $value){
-            $catalogs[$value->last_catalog_id]['nextLvCatalog'][$value->catalog_id]=[];
-            $catalogs[$value->last_catalog_id]['nextLvCatalog'][$value->catalog_id]['name']=$value->catalog_name;
+            $thisLv2Catalog=[];
+            $thisLv2Catalog['id']= $value->catalog_id;
+            $thisLv2Catalog['name']=$value->catalog_name;
+            $thisLv2Catalog['nextLvCatalog']=[];
+            if (isset($catalogsLv2[$value->last_catalog_id])) {
+                $catalogsLv2[$value->last_catalog_id] =array_merge($catalogsLv2[$value->last_catalog_id],[$thisLv2Catalog]);
+            }
+            else{
+                $catalogsLv2[$value->last_catalog_id][0]=$thisLv2Catalog;
+            }
             //$catalogs[$value->last_catalog_id]['nextLvCatalog'][$value->catalog_id]['nextLvCatalog']=[];
+        }
+        $Lv1catalog=$this->catalogService->selectCatalogByLv(1);
+        $catalogs=[];
+        $num=0;
+        foreach ($Lv1catalog as $key => $value){
+            $catalogsDate['id']=$value->catalog_id;
+            $catalogsDate['name']=$value->catalog_name;
+            $catalogsDate['nextLvCatalog']=$catalogsLv2[$value->catalog_id];
+            $catalogs[$num]=$catalogsDate;
+            $num++;
+//            $catalogs[$value->catalog_id]['name']=$value->catalog_name;
+//            $catalogs[$value->catalog_id]['nextLvCatalog']=[];
         }
         return response()->json([
             'code' => 1000,
