@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Service\ArticleService;
+use App\Service\CatalogService;
 use App\Tool\ValidationHelper;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
@@ -10,10 +11,12 @@ use Illuminate\Support\Facades\Validator;
 class ArticleController extends Controller
 {
     private $articleService;
+    private $catalogService;
 
-    public function __construct(ArticleService $articleService)
+    public function __construct(ArticleService $articleService, CatalogService $catalogService)
     {
         $this->articleService = $articleService;
+        $this->catalogService = $catalogService;
     }
 
     public function addArticle(Request $request)
@@ -74,10 +77,24 @@ class ArticleController extends Controller
 
     public function getAllArticleList()
     {
+        $Lv1Catalog =$this->catalogService->selectCatalogByLv(1);
         $articleList = $this->articleService->selectAllArticleList();
+        $articleTrueList=[];
+        $num =0;
+        foreach ($Lv1Catalog as $key => $value){
+            $thisCatalog=[];
+            $thisCatalog['catalog_id']=$value->catalog_id;
+            $thisCatalog['catalog_name']=$value->catalog_name;
+            if (isset($articleList[$value->catalog_id]))
+                $thisCatalog['article_list']=$articleList[$value->catalog_id];
+            else
+                $thisCatalog['article_list']=[];
+            $articleTrueList[$num]=$thisCatalog;
+            $num++;
+        }
         return response()->json([
             'code' => 1000,
-            'articleList' => $articleList
+            'articleList' => $articleTrueList
         ]);
     }
 

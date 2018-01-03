@@ -22,6 +22,7 @@ Route::post('/catalog/update','CatalogController@editCatalog');
 Route::get('/article/{article_id}','ArticleController@showArticle');
 Route::get('article/list/all','ArticleController@getAllArticleList');
 Route::get('article/list/{catalog_id}','ArticleController@getArticleList');
+//Route::post('/article/add','ArticleController@addArticle')->middleware('permission');
 Route::post('/article/add','ArticleController@addArticle');
 Route::post('/article/update','ArticleController@editArticle');
 Route::get('/article/delete/{article_id}','ArticleController@deleteArticle');
@@ -30,4 +31,5 @@ Route::post('/picture/add','PictureController@addPicture');
 Route::get('/picture/delete/{picture_id}','PictureController@deletePicture');
 Route::get('/picture/show','PictureController@showPicture');
 
+Route::post('/token/create','PasswordController@createToken');
 Route::post('/upload','UploadController@upPic');
