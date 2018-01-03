@@ -22,7 +22,8 @@ class ArticleController extends Controller
             'article_title' => 'required',
             'article_real_content' => 'required',
             'article_rendered_content' => 'required',
-            'article_catalog' => 'required'
+            'article_catalog' => 'required',
+            'article_first_catalog' => 'required'
         ];
 
         $validator = Validator::make($request->all(), $rule);
@@ -71,6 +72,15 @@ class ArticleController extends Controller
             ]);
     }
 
+    public function getAllArticleList()
+    {
+        $articleList = $this->articleService->selectAllArticleList();
+        return response()->json([
+            'code' => 1000,
+            'articleList' => $articleList
+        ]);
+    }
+
     public function editArticle(Request $request)
     {
         $rule = [
@@ -78,7 +88,8 @@ class ArticleController extends Controller
             'article_title' => 'required',
             'article_real_content' => 'required',
             'article_rendered_content' => 'required',
-            'article_catalog' => 'required'
+            'article_catalog' => 'required',
+            'article_first_catalog' => 'required'
         ];
 
         $validator = Validator::make($request->all(), $rule);
@@ -103,7 +114,7 @@ class ArticleController extends Controller
         if (isset($article_data->article_id)) {
             $this->articleService->deleteArticle($article_id);
             return response()->json([
-                'code' =>1000,
+                'code' => 1000,
                 'message' => '删除成功'
             ]);
         } else

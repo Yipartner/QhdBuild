@@ -19,6 +19,7 @@ class CreateArticlesTable extends Migration
             $table->text('article_real_content');
             $table->text('article_rendered_content');
             $table->integer('article_catalog');
+            $table->integer('article_first_catalog');
             $table->timestamps();
         });
     }

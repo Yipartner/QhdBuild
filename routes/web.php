@@ -20,6 +20,7 @@ Route::get('/catalog/delete/{catalog_id}','CatalogController@deleteCatalog');
 Route::post('/catalog/update','CatalogController@editCatalog');
 //文章：查、查列表、添加、更新、删除
 Route::get('/article/{article_id}','ArticleController@showArticle');
+Route::get('article/list/all','ArticleController@getAllArticleList');
 Route::get('article/list/{catalog_id}','ArticleController@getArticleList');
 Route::post('/article/add','ArticleController@addArticle');
 Route::post('/article/update','ArticleController@editArticle');

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Service\ArticleService;
 use App\Service\CatalogService;
 use App\Tool\ValidationHelper;
 use Illuminate\Http\Request;
@@ -10,9 +11,11 @@ use Illuminate\Support\Facades\Validator;
 class CatalogController extends Controller
 {
     private $catalogService;
-    public function __construct(CatalogService $catalogService)
+    private $articleService;
+    public function __construct(CatalogService $catalogService,ArticleService $articleService)
     {
         $this->catalogService=$catalogService;
+        $this->articleService=$articleService;
     }
     public function addCatalog(Request $request){
         $rule=[
@@ -64,6 +67,7 @@ class CatalogController extends Controller
         $Lv2catalog=$this->catalogService->selectCatalogByLv(2);
         foreach ($Lv2catalog as $key => $value){
             $thisLv2Catalog=[];
+            $thisLv2Catalog['lastCatalog']=$value->last_catalog_id;
             $thisLv2Catalog['id']= $value->catalog_id;
             $thisLv2Catalog['name']=$value->catalog_name;
             $thisLv2Catalog['nextLvCatalog']=[];
@@ -81,7 +85,10 @@ class CatalogController extends Controller
         foreach ($Lv1catalog as $key => $value){
             $catalogsDate['id']=$value->catalog_id;
             $catalogsDate['name']=$value->catalog_name;
+            if (isset($catalogsLv2[$value->catalog_id]))
             $catalogsDate['nextLvCatalog']=$catalogsLv2[$value->catalog_id];
+            else
+                $catalogsDate['nextLvCatalog']=[];
             $catalogs[$num]=$catalogsDate;
             $num++;
 //            $catalogs[$value->catalog_id]['name']=$value->catalog_name;
