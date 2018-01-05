@@ -34,5 +34,9 @@ class PasswordController extends Controller
             ]);
         }
     }
+    public function changePassword(Request $request){
+        $password=$request->input('password');
+        $this->passwordService->changePassword($password);
+    }
 
 }

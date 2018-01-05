@@ -9,8 +9,8 @@ class PasswordService
     public function insertPassword(){
 
     }
-    public function changePassword(){
-
+    public function changePassword($password){
+        DB::table('passwords')->where('id',1)->update(['password_value',$password]);
     }
     public function checkPassword($password){
         $passwordValue=DB::table('passwords')->where('id',1)->first()->password_value;

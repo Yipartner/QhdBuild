@@ -33,7 +33,7 @@ class Permission
             {
                 return response()->json([
                     'code'=>6001,
-                    'message' => 'token过期'
+                    'message' => 'token无效'
                 ]);
             }
         }

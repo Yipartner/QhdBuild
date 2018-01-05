@@ -31,5 +31,6 @@ Route::post('/picture/add','PictureController@addPicture');
 Route::get('/picture/delete/{picture_id}','PictureController@deletePicture');
 Route::get('/picture/show','PictureController@showPicture');
 
+Route::post('/password/change','PasswordController@changePassword');
 Route::post('/token/create','PasswordController@createToken');
 Route::post('/upload','UploadController@upPic');
