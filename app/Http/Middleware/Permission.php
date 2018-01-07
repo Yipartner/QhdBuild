@@ -27,7 +27,7 @@ class Permission
         if ($request->hasHeader('token')){
             $token = $this->tokenService->getToken($request->header('tokenId'));
             $time=new Carbon();
-            if ($request->header('token')==$token&&$token->expired_at>$time)
+            if ($request->header('token')==$token->token_content&&$token->expired_at>$time)
                 return $next($request);
             else
             {

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Service\PasswordService;
 use App\Service\TokenService;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class PasswordController extends Controller
@@ -38,5 +39,28 @@ class PasswordController extends Controller
         $password=$request->input('password');
         $this->passwordService->changePassword($password);
     }
-
+    public function checkToken($tokenId,$tokenContent){
+        if ($tokenId==0){
+            return response()->json([
+                'code' => 6001,
+                'message' => 'token无效'
+            ]);
+        }
+        else{
+            $res=$this->tokenService->getToken($tokenId);
+            $time=new Carbon();
+            if ($res->token_content==$tokenContent&&$res->expired_at>$time){
+                return response()->json([
+                    'code' => 1000,
+                    'message' => '验证通过'
+                ]);
+            }
+            else{
+                return response()->json([
+                    'code' => 6001,
+                    'message' => 'token过期'
+                ]);
+            }
+        }
+    }
 }
