@@ -66,9 +66,9 @@ class PictureController extends Controller
         ];
         foreach ($picture_data as $key => $value){
             if(!isset($pictures[$value->picture_type][0]))
-                $pictures[$value->picture_type][0]=$value->picture_url;
+                $pictures[$value->picture_type][0]=[$value->picture_id=>$value->picture_url];
             else
-                $pictures[$value->picture_type]=array_merge($pictures[$value->picture_type],[$value->picture_url]);
+                $pictures[$value->picture_type]=array_merge($pictures[$value->picture_type],[[$value->picture_id=>$value->picture_url]]);
         }
         return response()->json([
             'code' => 1000,

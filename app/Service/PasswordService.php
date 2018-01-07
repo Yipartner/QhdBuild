@@ -13,7 +13,8 @@ class PasswordService
 
     public function changePassword($password)
     {
-            DB::table('passwords')->where('id', 1)->update(['password_value', $password]);
+            DB::table('passwords')->where('id', 1)->update(['password_value' => $password]);
+
             return response()->json([
                 'code' => 1000,
                 'message' => '密码修改成功'

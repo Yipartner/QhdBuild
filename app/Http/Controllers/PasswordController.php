@@ -39,9 +39,13 @@ class PasswordController extends Controller
     {
         $password = $request->input('password');
         $newPassword = $request->input('newPassword');
-        if ($this->passwordService->checkPassword($password))
+        if ($this->passwordService->checkPassword($password)) {
             $this->passwordService->changePassword($newPassword);
-        else {
+            return response()->json([
+                'code' => 1000,
+                'message' => '密码修改成功'
+            ]);
+        } else {
             return response()->json([
                 'code' => 8003,
                 'message' => '密码错误'
