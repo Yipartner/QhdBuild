@@ -35,3 +35,8 @@ Route::get('/token/check/{tokenId}/{tokenContent}','PasswordController@checkToke
 Route::post('/password/change','PasswordController@changePassword');
 Route::post('/token/create','PasswordController@createToken');
 Route::post('/upload','UploadController@upPic')->middleware('permission');
+
+Route::post('/picture/lun/add','RandPictureController@addPicture');
+Route::post('/picture/lun/{pictureId}','RandPictureController@updatePicture');
+Route::get('picture/lun/delete/{pictureId}','RandPictureController@deletePicture');
+Route::get('picture/lun/show','RandPictureController@showPictures');
