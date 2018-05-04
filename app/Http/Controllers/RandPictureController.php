@@ -61,6 +61,14 @@ class RandPictureController extends Controller
             'message'=>'删除成功'
         ]);
     }
+    public function showTypePictures($typeId){
+        $pictures=DB::table('rand_pictures')->where('type',$typeId)->get();
+
+        return response()->json([
+            'code' =>1000,
+            'pictures'=>$pictures
+        ]);
+    }
     public function showPictures($typeId){
         $pictures=DB::table('rand_pictures')->where('type',$typeId)->get();
         $picturesArray=[];
