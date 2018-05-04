@@ -15,7 +15,7 @@ class RandPictureController extends Controller
             "picture_url" =>'required',
             'url'=>'required'
         ];
-        $res=ValidationHelper::validateCheck($request->input(),$rule);
+        $res=ValidationHelper::validateCheck($request->all(),$rule);
         if ($res->fails()){
             return response()->json([
                 'code' => 5001,
