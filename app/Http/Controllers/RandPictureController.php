@@ -69,15 +69,15 @@ class RandPictureController extends Controller
             'pictures'=>$pictures
         ]);
     }
-    public function showPictures($typeId){
-        $pictures=DB::table('rand_pictures')->where('type',$typeId)->get();
+    public function showPictures(){
+        $pictures=DB::table('rand_pictures')->where('type','>',0)->get();
         $picturesArray=[];
         foreach ($pictures as $item){
-            if (isset($picturesArray[$pictures->type])){
-                array_merge($picturesArray[$pictures->type],[$item]);
+            if (isset($picturesArray[$item->type])){
+                array_push($picturesArray[$item->type],$item);
             }
             else{
-                $picturesArray[$pictures->type]=[$item];
+                $picturesArray[$item->type]=[$item];
             }
         }
         return response()->json([
