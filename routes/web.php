@@ -26,6 +26,7 @@ Route::get('article/list/{catalog_id}','ArticleController@getArticleList');
 Route::post('/article/add','ArticleController@addArticle')->middleware('permission');
 Route::post('/article/update','ArticleController@editArticle')->middleware('permission');
 Route::get('/article/delete/{article_id}','ArticleController@deleteArticle')->middleware('permission');
+Route::get('/article/search/{title}','ArticleController@searchArticle');
 //图片
 Route::post('/picture/add','PictureController@addPicture')->middleware('permission');
 Route::get('/picture/delete/{picture_id}','PictureController@deletePicture')->middleware('permission');

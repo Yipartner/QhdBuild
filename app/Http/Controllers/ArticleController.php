@@ -6,6 +6,7 @@ use App\Service\ArticleService;
 use App\Service\CatalogService;
 use App\Tool\ValidationHelper;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 
 class ArticleController extends Controller
@@ -141,5 +142,14 @@ class ArticleController extends Controller
             ]);
 
 
+    }
+    public function searchArticle(string $title){
+        $articleList=DB::table('articles')->where([
+            ['article_title','like','%'.$title.'%']
+        ])->paginate(10);
+        return response()->json([
+            'code'=>1000,
+            'data'=>$articleList
+        ]);
     }
 }
