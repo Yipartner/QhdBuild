@@ -146,7 +146,7 @@ class ArticleController extends Controller
     public function searchArticle(string $title){
         $articleList=DB::table('articles')->where([
             ['article_title','like','%'.$title.'%']
-        ])->paginate(10);
+        ])->select('article_id','article_title')->paginate(10);
         return response()->json([
             'code'=>1000,
             'data'=>$articleList
