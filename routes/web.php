@@ -39,6 +39,9 @@ Route::post('/upload','UploadController@upPic')->middleware('permission');
 
 Route::post('/picture/lun/add','RandPictureController@addPicture');
 Route::post('/picture/lun/{pictureId}','RandPictureController@updatePicture');
-Route::get('picture/lun/delete/{pictureId}','RandPictureController@deletePicture');
-Route::get('picture/lun/show/{typeId}','RandPictureController@showTypePictures');
-Route::get('pictures/lun/show','RandPictureController@showPictures');
+Route::get('/picture/lun/delete/{pictureId}','RandPictureController@deletePicture');
+Route::get('/picture/lun/show/{typeId}','RandPictureController@showTypePictures');
+Route::get('/pictures/lun/show','RandPictureController@showPictures');
+
+Route::post('/friendurl/add','PictureController@createFriendUrl');
+Route::get('/friendurl/delete/{id}','PictureController@deleteFriendUrl');
