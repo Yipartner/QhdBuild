@@ -5,7 +5,9 @@ namespace App\Http\Controllers;
 use App\Service\PictureService;
 use App\Tool\ValidationHelper;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
+use phpDocumentor\Reflection\Types\Integer;
 
 class PictureController extends Controller
 {
@@ -75,4 +77,34 @@ class PictureController extends Controller
             'picture'=>$pictures
         ]);
     }
+
+    public function createFriendUrl(Request $request){
+        //最多6个友情链接
+        $rules=[
+            'url'=>'required',
+            'title'=>'required',
+            'position'=>'required|integer|min:1|max:6'
+        ];
+        $res=ValidationHelper::validateCheck($request->input(),$rules);
+        if ($res->fails()){
+            return response()->json([
+                'code' => '1001',
+                'message'=>$res->errors()
+            ]);
+        }
+        $data= ValidationHelper::getInputData($request,$rules);
+        DB::table('friend_urls')->insert($data);
+        return response()->json([
+            'code' => 1000,
+            'message' =>'友情链接创建成功'
+        ]);
+    }
+    public function deleteFriendUrl($id){
+        DB::table('friend_urls')->where('id',$id)->delete();
+        return response()->json([
+            'code' => 1000,
+            'message' => '删除成功'
+        ]);
+    }
+
 }
