@@ -93,11 +93,22 @@ class PictureController extends Controller
             ]);
         }
         $data= ValidationHelper::getInputData($request,$rules);
+        $check=DB::table('friend_urls')->where('position',$data['position'])->first();
+        if ($check){
+            DB::table('friend_urls')
+                ->where('position',$data['position'])
+                ->update($data);
+            return response()->json([
+                'code' => 1000,
+                'message' =>'位置'.$data['position'].'的友情链接更新成功'
+            ]);
+        }else{
         DB::table('friend_urls')->insert($data);
         return response()->json([
             'code' => 1000,
             'message' =>'友情链接创建成功'
         ]);
+        }
     }
     public function deleteFriendUrl($id){
         DB::table('friend_urls')->where('id',$id)->delete();
