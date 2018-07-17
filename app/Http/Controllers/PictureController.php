@@ -100,7 +100,7 @@ class PictureController extends Controller
                 ->update($data);
             return response()->json([
                 'code' => 1000,
-                'message' =>'友情链接创建成功'
+                'message' =>'位置'.$data['position'].'的友情链接更新成功'
             ]);
         }else{
         DB::table('friend_urls')->insert($data);
