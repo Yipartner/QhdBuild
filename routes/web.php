@@ -45,3 +45,4 @@ Route::get('/pictures/lun/show','RandPictureController@showPictures');
 
 Route::post('/friendurl/add','PictureController@createFriendUrl');
 Route::get('/friendurl/delete/{id}','PictureController@deleteFriendUrl');
+Route::get('/friendurl/show','PictureController@selectFriendUrl');

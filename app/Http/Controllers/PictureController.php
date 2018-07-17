@@ -106,5 +106,13 @@ class PictureController extends Controller
             'message' => '删除成功'
         ]);
     }
+    public function selectFriendUrl(Request $request){
+        $urls = DB::table('friend_urls')->get();
+        return response()->json([
+            'code' => 1000,
+            'message' => '查询友情链接成功',
+            'data' => $urls
+        ]);
+    }
 
 }
