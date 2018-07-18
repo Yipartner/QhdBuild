@@ -74,7 +74,10 @@ class RandPictureController extends Controller
         $picturesArray=[];
         foreach ($pictures as $item){
             if (isset($picturesArray[$item->type])){
-                array_push($picturesArray[$item->type],$item);
+                if ($item->type != 3)
+                    array_push($picturesArray[$item->type],$item);
+                else
+                    array_unshift($picturesArray[$item->type],$item);
             }
             else{
                 $picturesArray[$item->type]=[$item];
