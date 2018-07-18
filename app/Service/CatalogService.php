@@ -38,6 +38,9 @@ class CatalogService
     public function deleteCatalog($catalog_id)
     {
         DB::table('catalogs')->where('catalog_id', $catalog_id)->delete();
+        DB::table('articles')->where('article_catalog',$catalog_id)
+            ->orWhere('article_first_catalog',$catalog_id)
+            ->delete();
     }
 
     public function updateCatalog($catalog_data)
