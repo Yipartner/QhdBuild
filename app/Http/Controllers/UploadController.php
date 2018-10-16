@@ -15,13 +15,21 @@ class UploadController extends Controller
 {
     public function upPic(Request $request)
     {
+        $file_name = $request->input('fileName', null);
         $accessKey = $request->input('accessKey');
         $secretKey = $request->input('secretKey');
         $bucket = $request->input('bucket');
         $auth = new Auth($accessKey, $secretKey);
-        $token = $auth->uploadToken($bucket);
+
+        $policy = [
+            'saveKey' => $file_name
+        ];
+        if ($file_name)
+            $token = $auth->uploadToken($bucket, null, 3600, $policy, true);
+        else
+            $token = $auth->uploadToken($bucket);
         return response()->json([
-            'token'=> $token
+            'token' => $token
         ]);
     }
 }
